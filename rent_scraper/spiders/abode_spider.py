@@ -21,11 +21,12 @@ class AbodeSpider(scrapy.Spider):
 
     def parse_property_page(self, response):
         l = AbodePropertyLoader(item=PropertyItem(), response=response)
+        l.add_css('area', '.detailHeader > h2::text')
         l.add_css('street_name', '.detailHeader > h2::text')
+        l.add_css('postcode', '.detailHeader > h2::text')
         l.add_css('price_per_person_per_month', '.detailHeader > h2 > strong::text')
-        #item['postcode'] = ""
-        #item['agent'] = "Abode"
-        #item['number_bedrooms'] = 5
+        l.add_value('agent', 'Abode')
+        l.add_value('number_bedrooms', 5)
         #item['number_bathrooms'] = ""
-        #item['description'] = response.css("div#description > div.inner").xpath(".//text()").extract()
+        l.add_xpath('description', "//div[@id='description']/div[@class='inner']//text()")
         return l.load_item()

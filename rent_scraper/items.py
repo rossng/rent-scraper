@@ -8,6 +8,7 @@ class RentScraperItem(scrapy.Item):
 
 
 class PropertyItem(scrapy.Item):
+    area = scrapy.Field()
     street_name = scrapy.Field()
     postcode = scrapy.Field()
     agent = scrapy.Field()

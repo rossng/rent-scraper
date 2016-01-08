@@ -14,6 +14,8 @@ BOT_NAME = 'rent_scraper'
 SPIDER_MODULES = ['rent_scraper.spiders']
 NEWSPIDER_MODULE = 'rent_scraper.spiders'
 
+FEED_URI = 'properties.json'
+FEED_FORMAT = 'json'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'rent_scraper (+http://www.yourdomain.com)'
@@ -61,9 +63,9 @@ NEWSPIDER_MODULE = 'rent_scraper.spiders'
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'rent_scraper.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+    #'rent_scraper.pipelines.json_pipeline.JsonWriterPipeline': 300
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

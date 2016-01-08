@@ -1,10 +1,12 @@
-import scrapy
 from scrapy.crawler import CrawlerProcess
-from rent_scraper.spiders import abode_spider
 
-process = CrawlerProcess({
-    'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
-})
+from scrapy.utils.project import get_project_settings
 
-process.crawl(abode_spider.AbodeSpider)
+from rent_scraper.spiders.abode_spider import AbodeSpider
+
+settings = get_project_settings()
+
+process = CrawlerProcess(get_project_settings())
+
+process.crawl(AbodeSpider)
 process.start()
