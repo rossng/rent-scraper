@@ -27,6 +27,12 @@ class AbodeSpider(scrapy.Spider):
         l.add_css('price_per_person_per_month', '.detailHeader > h2 > strong::text')
         l.add_value('agent', 'Abode')
         l.add_value('number_bedrooms', 5)
-        #item['number_bathrooms'] = ""
+        # TODO: bathrooms
         l.add_xpath('description', "//div[@id='description']/div[@class='inner']//text()")
+        l.add_xpath('has_washing_machine', "//div[@id='description']/div[@class='inner']//text()")
+        l.add_xpath('has_parking', "//div[@class='features']//li//text()")
+        l.add_xpath('has_dishwasher', "//div[@id='description']/div[@class='inner']//text()")
+        l.add_xpath('epc_rating', "//div[@class='features']//li//text()")
+
+        l.add_value('url', response.url)
         return l.load_item()

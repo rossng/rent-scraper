@@ -15,7 +15,7 @@ SPIDER_MODULES = ['rent_scraper.spiders']
 NEWSPIDER_MODULE = 'rent_scraper.spiders'
 
 FEED_URI = 'properties.json'
-FEED_FORMAT = 'json'
+FEED_FORMAT = 'jsonlines'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'rent_scraper (+http://www.yourdomain.com)'

@@ -1,5 +1,5 @@
 import re
-from future.utils import lmap
+from future.utils import lmap, lfilter
 
 class AbodePriceProcessor(object):
 
@@ -28,3 +28,10 @@ class AbodeStreetProcessor(object):
     def __call__(self, values):
         """Takes a list containing a string like 'Horfield, Toronto Road, BS7 0JP' and returns 'Toronto Road'"""
         return values[0].split(',')[1].strip()
+
+class AbodeEpcRatingProcessor(object):
+
+    def __call__(self, values):
+        """Takes a list of property features and extracts the EPC rating"""
+        epc_rating_items = lfilter(lambda v: v.startswith('EPC Rating'), values)
+        return epc_rating_items[0][-1]
