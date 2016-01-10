@@ -125,3 +125,5 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 
+rent_scraper/properties_*.json
+results.html
