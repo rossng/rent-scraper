@@ -127,3 +127,4 @@ crashlytics-build.properties
 
 rent_scraper/properties_*.json
 results.html
+.scrapy/
