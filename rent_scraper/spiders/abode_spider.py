@@ -21,11 +21,11 @@ class AbodeSpider(scrapy.Spider):
             yield scrapy.Request(url, callback=self.parse_property_page)
 
     def parse_property_page(self, response):
-        l = AbodePropertyLoader(item=PropertyItem(), response=response)
+        l = AbodePropertyLoader(item=PropertyItem(), response=response, number_bedrooms=5)
         l.add_css('area', '.detailHeader > h2::text')
         l.add_css('street_name', '.detailHeader > h2::text')
         l.add_css('postcode', '.detailHeader > h2::text')
-        l.add_css('price_per_person_per_month', '.detailHeader > h2 > strong::text')
+        l.add_css('price_per_month', '.detailHeader > h2 > strong::text')
         l.add_value('agent', 'Abode')
         l.add_value('number_bedrooms', 5)
         # TODO: bathrooms

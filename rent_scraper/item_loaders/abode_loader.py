@@ -1,8 +1,7 @@
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import Identity, TakeFirst, Compose, Join
-from rent_scraper.processors.abode_processors import \
-    AbodePriceProcessor, AbodePostcodeProcessor, AbodeAreaProcessor, AbodeStreetProcessor, AbodeEpcRatingProcessor
-from rent_scraper.processors.common_processors import TextSearch, Concatenate
+from rent_scraper.processors.abode_processors import AbodePriceProcessor, AbodeEpcRatingProcessor
+from rent_scraper.processors.common_processors import TextSearch, Concatenate, Split, Get
 
 
 class AbodePropertyLoader(ItemLoader):
@@ -10,13 +9,13 @@ class AbodePropertyLoader(ItemLoader):
     default_input_processor = Identity()
     default_output_processor = TakeFirst()
 
-    area_in = AbodeAreaProcessor()
+    area_in = Compose(Split(','), Get(0), Get(0))
 
-    street_name_in = AbodeStreetProcessor()
+    street_name_in = Compose(Split(','), Get(0), Get(1))
 
-    postcode_in = AbodePostcodeProcessor()
+    postcode_in = Compose(Split(','), Get(0), Get(2))
 
-    price_per_person_per_month_in = AbodePriceProcessor()
+    price_per_month_in = AbodePriceProcessor()
 
     description_out = Join()
 

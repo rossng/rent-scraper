@@ -1,22 +1,21 @@
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import Identity, TakeFirst, Compose, Join
 
-from rent_scraper.processors.common_processors import TextSearch, Concatenate
-from rent_scraper.processors.ubu_lettings_processors import UbuLettingsAreaProcessor, UbuLettingsEpcRatingProcessor, \
-UbuLettingsEpcRatingProcessor, UbuLettingsPostcodeProcessor, UbuLettingsPriceProcessor, UbuLettingsStreetProcessor
+from rent_scraper.processors.common_processors import TextSearch, Concatenate, Split, Get
+from rent_scraper.processors.ubu_lettings_processors import UbuLettingsEpcRatingProcessor, UbuLettingsPriceProcessor
 
 class UbuLettingsPropertyLoader(ItemLoader):
 
     default_input_processor = Identity()
     default_output_processor = TakeFirst()
 
-    area_in = UbuLettingsAreaProcessor()
+    area_in = Compose(Split(','), Get(0), Get(1))
 
-    street_name_in = UbuLettingsStreetProcessor()
+    street_name_in = Compose(Split(','), Get(0), Get(0))
 
-    postcode_in = UbuLettingsPostcodeProcessor()
+    postcode_in = Compose(Split(','), Get(0), Get(2))
 
-    price_per_person_per_month_in = UbuLettingsPriceProcessor()
+    price_per_month_in = UbuLettingsPriceProcessor()
 
     description_out = Join()
 

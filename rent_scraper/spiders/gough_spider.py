@@ -37,7 +37,7 @@ class GoughSpider(scrapy.Spider):
         l.add_css('area', '.bannertable > tr:first-child > td:first-child b::text')
         l.add_css('street_name', '.bannertable > tr:first-child > td:first-child b::text')
         #l.add_css('postcode', '.detailHeader > h2::text')
-        l.add_xpath('price_per_person_per_month', u"//b[contains(text(), '£')]//text()")
+        l.add_xpath('price_per_month', u"//b[contains(text(), '£')]//text()")
         l.add_value('agent', 'Gough Quarters')
         l.add_value('number_bedrooms', 5)
         # TODO: bathrooms, epc

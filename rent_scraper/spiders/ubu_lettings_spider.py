@@ -32,7 +32,7 @@ class UbuLettingsSpider(scrapy.Spider):
         l.add_css('area', '#propAddress::text')
         l.add_css('street_name', '#propAddress::text')
         #l.add_css('postcode', '.detailHeader > h2::text')
-        l.add_css('price_per_person_per_month', '#propPrice::text')
+        l.add_css('price_per_month', '#propPrice::text')
         l.add_value('agent', 'UBU Lettings')
         l.add_value('number_bedrooms', 5)
         # TODO: bathrooms

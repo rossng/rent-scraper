@@ -6,8 +6,25 @@ from scrapy.loader import wrap_loader_context
 from scrapy.utils.datatypes import MergeDict
 
 
-class TextSearch(object):
+class Split(object):
+    def __init__(self, delimiter):
+        self.delimiter = delimiter
 
+    def split(self, value):
+        return value.split(self.delimiter)
+
+    def __call__(self, values):
+        return lmap(self.split, values)
+
+
+class Get(object):
+    def __init__(self, index):
+        self.index = index
+
+    def __call__(self, values):
+        return values[self.index] if len(values) > self.index else None
+
+class TextSearch(object):
     def __init__(self, search_phrase):
         self.search_phrase = search_phrase.lower()
 
@@ -17,7 +34,6 @@ class TextSearch(object):
         return any(self.search_phrase in s.lower() for s in values)
 
 class Concatenate(object):
-
     def __init__(self, *functions, **default_loader_context):
         self.functions = functions
         self.stop_on_none = default_loader_context.get('stop_on_none', True)

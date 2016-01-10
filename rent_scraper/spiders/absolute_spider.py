@@ -25,7 +25,7 @@ class AbsoluteSpider(scrapy.Spider):
         l.add_css('area', '.property-area::text')
         l.add_css('street_name', 'h3.property-address::text')
         l.add_css('postcode', 'h3.property-address::text')
-        l.add_css('price_per_person_per_month', '.property-price::text')
+        l.add_css('price_per_month', '.property-price::text')
         l.add_value('agent', 'Absolute Property')
         l.add_css('number_bedrooms', '.property-bedrooms::text')
         l.add_css('let_agreed', '.property-status::text')

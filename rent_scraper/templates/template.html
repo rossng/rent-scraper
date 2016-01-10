@@ -7,31 +7,36 @@
 <body>
     <h1>{{ properties | length }} properties found</h1>
     <div id="properties">
-        <input class="search" placeholder="Search" />
-        <button class="sort" data-sort="area">
-        Sort by name
-        </button>
+        <input type="number" placeholder="Number of bedrooms" id="num_bedrooms" /><br />
+        <input class="search" placeholder="Search" /><br />
+        Sort by:
+        <button class="sort" data-sort="agent">Agent</button>
+        <button class="sort" data-sort="area">Area</button>
+        <button class="sort" data-sort="price">Price</button>
         <table class="pure-table pure-table-bordered">
             <thead>
                 <tr>
                     <th>Image</th>
                     <th>Agent</th>
+                    <th>Bedrooms</th>
                     <th>Area</th>
                     <th>Street</th>
-                    <th>Price (pppm)</th>
+                    <th>Price (pcm)</th>
                     <th>Amenities</th>
                     <th>Heating Type</th>
+                    <th>EPC Rating</th>
                     <th>Let Agreed</th>
                 </tr>
             </thead>
             <tbody class="list">
-                {% for property in properties | sort(attribute='price_per_person_per_month') %}
+                {% for property in properties | sort(attribute='price_per_month') %}
                 <tr>
                     <td class="image"><img src="{{ property.image_url }}" width="100px" height="auto"/></td>
-                    <td class="agent><a href="{{ property.url }}">{{ property.agent }}</a></td>
+                    <td class="agent"><a href="{{ property.url }}">{{ property.agent }}</a></td>
+                    <td class="number_bedrooms">{{ property.number_bedrooms }}</td>
                     <td class="area">{{ property.area }}</td>
                     <td class="street_name">{{ property.street_name }}</td>
-                    <td class="price">&pound;{{ property.price_per_person_per_month }}</td>
+                    <td class="price">&pound;{{ property.price_per_month }}</td>
                     <td class="amenities">
                         <ul>
                         {% for amenity in property.amenities %}
@@ -40,19 +45,30 @@
                         </ul>
                     </td>
                     <td class="heating_type">{{ property.heating_type }}</td>
+                    <td class="epc_rating">{{ property.epc_rating }}</td>
                     <td class="let_agreed">{{ property.let_agreed }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
     <script>
         var options = {
-          valueNames: [ 'image', 'agent', 'area', 'street_name', 'price', 'amenities', 'heating_type', 'let_agreed' ]
+          valueNames: [ 'image', 'agent', 'number_bedrooms', 'area', 'street_name',
+              'price', 'amenities', 'heating_type', 'epc_rating', 'let_agreed' ]
         };
 
-        var userList = new List('properties', options);
+        var properties = new List('properties', options);
+
+        $("#num_bedrooms").bind("change paste keyup", function() {
+            var num = this.value;
+
+            properties.filter(function (item) {
+                return item.values().number_bedrooms == num;
+            });
+        })
     </script>
 </body>
 </html>
