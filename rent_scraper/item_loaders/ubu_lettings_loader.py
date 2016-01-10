@@ -1,7 +1,7 @@
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import Identity, TakeFirst, Compose, Join
 
-from rent_scraper.processors.common_processors import TextSearch
+from rent_scraper.processors.common_processors import TextSearch, Concatenate
 from rent_scraper.processors.ubu_lettings_processors import UbuLettingsAreaProcessor, UbuLettingsEpcRatingProcessor, \
 UbuLettingsEpcRatingProcessor, UbuLettingsPostcodeProcessor, UbuLettingsPriceProcessor, UbuLettingsStreetProcessor
 
@@ -20,12 +20,13 @@ class UbuLettingsPropertyLoader(ItemLoader):
 
     description_out = Join()
 
-    has_washing_machine_in = TextSearch('washing machine')
+    amenities_in = Concatenate(
+            Compose(TextSearch('washing machine'), lambda x: ['Washing machine'] if x else []),
+            Compose(TextSearch('parking'), lambda x: ['Parking'] if x else []),
+            Compose(TextSearch('dishwasher'), lambda x: ['Dishwasher'] if x else [])
+    )
+    amenities_out = Identity()
 
-    has_parking_in = TextSearch('parking')
-
-    has_dishwasher_in = TextSearch('dishwasher')
-
-    heating_type_in = Compose(lambda is_gas: 'gas' if is_gas else 'unknown', TextSearch('gas'))
+    heating_type_in = Compose(TextSearch('gas'), lambda is_gas: 'gas' if is_gas else 'unknown')
 
     epc_rating_in = UbuLettingsEpcRatingProcessor()

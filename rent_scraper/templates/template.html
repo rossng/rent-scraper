@@ -1,0 +1,40 @@
+<html>
+<head>
+    <title>Property Search Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+</head>
+<body>
+    <h1>{{ properties | length }} properties found</h1>
+    <table class="pure-table pure-table-bordered">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Agent</th>
+                <th>Area</th>
+                <th>Street</th>
+                <th>Price (pppm)</th>
+                <th>Amenities</th>
+                <th>Heating Type</th>
+            </tr>
+        </thead>
+        {% for property in properties | sort(attribute='price_per_person_per_month') %}
+        <tr>
+            <td><img src="{{ property.image_url }}" width="100px" height="auto"/></td>
+            <td><a href="{{ property.url }}">{{ property.agent }}</a></td>
+            <td>{{ property.area }}</td>
+            <td>{{ property.street_name }}</td>
+            <td>&pound;{{ property.price_per_person_per_month }}</td>
+            <td>
+                <ul>
+                {% for amenity in property.amenities %}
+                    <li>{{ amenity }}</li>
+                {% endfor %}
+                </ul>
+            </td>
+            <td>{{ property.heating_type }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -9,6 +9,7 @@ class RentScraperItem(scrapy.Item):
 
 class PropertyItem(scrapy.Item):
     url = scrapy.Field()
+    image_url = scrapy.Field()
     area = scrapy.Field()
     street_name = scrapy.Field()
     postcode = scrapy.Field()
@@ -17,8 +18,6 @@ class PropertyItem(scrapy.Item):
     number_bedrooms = scrapy.Field()
     number_bathrooms = scrapy.Field()
     description = scrapy.Field()
-    has_washing_machine = scrapy.Field()
-    has_parking = scrapy.Field()
-    has_dishwasher = scrapy.Field()
+    amenities = scrapy.Field()
     heating_type = scrapy.Field()
     epc_rating = scrapy.Field()

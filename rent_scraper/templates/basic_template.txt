@@ -1,0 +1,1 @@
+Agent: {{agent}}, Area: {{area}}, Street: {{street_name}}, Price: {{price_per_person_per_month}}, Heating: {{heating_type}}
