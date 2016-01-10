@@ -21,3 +21,4 @@ class PropertyItem(scrapy.Item):
     amenities = scrapy.Field()
     heating_type = scrapy.Field()
     epc_rating = scrapy.Field()
+    let_agreed = scrapy.Field()

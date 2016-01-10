@@ -10,7 +10,7 @@ class UbuLettingsSpider(scrapy.Spider):
     allowed_domains = ["expertagent.co.uk"]
     custom_settings = { 'FEED_URI': 'properties_ubu.json' }
     start_urls = [
-        "http://powering2.expertagent.co.uk/customsearch.aspx?aid={7168595e-e672-4cea-9645-f911650e6f5c}&DefaultPage=3&dep=2&radius=5&minbeds=5&minprice=&maxprice="
+        "http://powering2.expertagent.co.uk/customsearch.aspx?aid={7168595e-e672-4cea-9645-f911650e6f5c}&DefaultPage=3&dep=2&radius=5&minbeds=5&maxbeds=5&minprice=&maxprice="
     ]
 
     def parse(self, response):

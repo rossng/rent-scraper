@@ -6,35 +6,53 @@
 </head>
 <body>
     <h1>{{ properties | length }} properties found</h1>
-    <table class="pure-table pure-table-bordered">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Agent</th>
-                <th>Area</th>
-                <th>Street</th>
-                <th>Price (pppm)</th>
-                <th>Amenities</th>
-                <th>Heating Type</th>
-            </tr>
-        </thead>
-        {% for property in properties | sort(attribute='price_per_person_per_month') %}
-        <tr>
-            <td><img src="{{ property.image_url }}" width="100px" height="auto"/></td>
-            <td><a href="{{ property.url }}">{{ property.agent }}</a></td>
-            <td>{{ property.area }}</td>
-            <td>{{ property.street_name }}</td>
-            <td>&pound;{{ property.price_per_person_per_month }}</td>
-            <td>
-                <ul>
-                {% for amenity in property.amenities %}
-                    <li>{{ amenity }}</li>
+    <div id="properties">
+        <input class="search" placeholder="Search" />
+        <button class="sort" data-sort="area">
+        Sort by name
+        </button>
+        <table class="pure-table pure-table-bordered">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Agent</th>
+                    <th>Area</th>
+                    <th>Street</th>
+                    <th>Price (pppm)</th>
+                    <th>Amenities</th>
+                    <th>Heating Type</th>
+                    <th>Let Agreed</th>
+                </tr>
+            </thead>
+            <tbody class="list">
+                {% for property in properties | sort(attribute='price_per_person_per_month') %}
+                <tr>
+                    <td class="image"><img src="{{ property.image_url }}" width="100px" height="auto"/></td>
+                    <td class="agent><a href="{{ property.url }}">{{ property.agent }}</a></td>
+                    <td class="area">{{ property.area }}</td>
+                    <td class="street_name">{{ property.street_name }}</td>
+                    <td class="price">&pound;{{ property.price_per_person_per_month }}</td>
+                    <td class="amenities">
+                        <ul>
+                        {% for amenity in property.amenities %}
+                            <li>{{ amenity }}</li>
+                        {% endfor %}
+                        </ul>
+                    </td>
+                    <td class="heating_type">{{ property.heating_type }}</td>
+                    <td class="let_agreed">{{ property.let_agreed }}</td>
+                </tr>
                 {% endfor %}
-                </ul>
-            </td>
-            <td>{{ property.heating_type }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+            </tbody>
+        </table>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
+    <script>
+        var options = {
+          valueNames: [ 'image', 'agent', 'area', 'street_name', 'price', 'amenities', 'heating_type', 'let_agreed' ]
+        };
+
+        var userList = new List('properties', options);
+    </script>
 </body>
 </html>
