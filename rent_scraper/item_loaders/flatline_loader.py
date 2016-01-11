@@ -6,11 +6,16 @@ from scrapy.loader.processors import Identity, TakeFirst, Compose, Join, MapComp
 from rent_scraper.processors.common_processors import TextSearch, Concatenate, Split, Get
 
 
-def format_price(price_text):
-    """Take text representing a price on the Gough Quarters website and return an integer."""
-    return int(re.sub(r"\D", "", price_text))
+def format_price(price_text, loader_context):
+    """Take text representing a price on the Flatline website and return an integer."""
+    return int(re.sub(r"\D", "", price_text)) * loader_context.get('number_bedrooms')
 
-class GoughPropertyLoader(ItemLoader):
+
+def to_number_bedrooms(text):
+    return int(text.split(" ")[0])
+
+
+class FlatlinePropertyLoader(ItemLoader):
 
     default_input_processor = Identity()
     default_output_processor = TakeFirst()
@@ -20,6 +25,8 @@ class GoughPropertyLoader(ItemLoader):
     street_name_in = Compose(Split(' - '), Get(0), Get(1))
 
     postcode_in = Identity()
+
+    number_bedrooms_in = MapCompose(to_number_bedrooms)
 
     price_per_month_in = Compose(TakeFirst(), MapCompose(format_price))
 
