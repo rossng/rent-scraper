@@ -20,7 +20,7 @@ class FlatlineSpider(scrapy.Spider):
     allowed_domains = ["housescape.org.uk"]
     custom_settings = {'FEED_URI': 'properties_flatline.json'}
     start_urls = [
-        "http://www2.housescape.org.uk/cgi-bin/search.pl?fla1&fo=nr,style=7,branchname=student&1"
+        "http://www2.housescape.org.uk/cgi-bin/search.pl?fla1&fo=nr,style=7,branchname=student"
     ]
 
     def parse(self, response):

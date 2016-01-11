@@ -6,33 +6,29 @@ from scrapy.loader.processors import Identity, TakeFirst, Compose, Join, MapComp
 from rent_scraper.processors.common_processors import TextSearch, Concatenate, Split, Get
 
 
-def format_price(price_text, loader_context):
-    """Take text representing a price on the Flatline website and return an integer."""
-    return int(re.sub(r"\D", "", price_text)) * loader_context.get('number_bedrooms')
+def format_price(price_text):
+    """Take text representing a price on the Ocean website and return an integer."""
+    return int(re.sub(r"\D", "", price_text))
 
 
-def to_number_bedrooms(text):
-    try:
-        return int(text.split(" ")[0])
-    except ValueError:
-        if text.split(" ") == "Studio":
-            return 1
-        else:
-            return 0
+def to_epc_rating(text):
+    match_or_none = re.search("EPC( band)?: (.)", text, re.IGNORECASE)
+    return match_or_none.group(2) if match_or_none else None
 
 
-class FlatlinePropertyLoader(ItemLoader):
+class PropertyConceptPropertyLoader(ItemLoader):
 
     default_input_processor = Identity()
     default_output_processor = TakeFirst()
 
-    area_in = Compose(Split(' - '), Get(0), Get(1))
+    area_in = Compose(Split(','), Get(0), Get(1))
 
-    street_name_in = Compose(Split(' - '), Get(0), Get(1))
+    street_name_in = Compose(Split(','), Get(0), Get(0))
 
     postcode_in = Identity()
 
-    number_bedrooms_in = MapCompose(to_number_bedrooms)
+    number_bedrooms_in = Compose(TakeFirst(), MapCompose(int))
+    number_bathrooms_in = Compose(TakeFirst(), MapCompose(int))
 
     price_per_month_in = Compose(TakeFirst(), MapCompose(format_price))
 
@@ -47,4 +43,6 @@ class FlatlinePropertyLoader(ItemLoader):
 
     heating_type_in = Compose(TextSearch('gas'), lambda is_gas: 'gas' if is_gas else 'unknown')
 
-    let_agreed_in = Compose(lambda xs: 'Yes' if any('Let' in x for x in xs) else 'No')
+    let_agreed_in = Compose(lambda xs: 'Let' if any('Let Agreed' in x for x in xs) else 'No')
+
+    epc_rating_in = Compose(MapCompose(to_epc_rating), lambda xs: filter(lambda x: x, xs))

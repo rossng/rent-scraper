@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 </head>
 <body>
-    <h1>{{ properties | length }} properties found</h1>
+    <h1><span id="num_properties">{{ properties | length }}</span> properties found</h1>
     <div id="properties">
         <input type="number" placeholder="Number of bedrooms" id="num_bedrooms" /><br />
         <input class="search" placeholder="Search" /><br />
@@ -61,6 +61,10 @@
         };
 
         var properties = new List('properties', options);
+
+        properties.on('filterStart', function() {
+            $('span#num_properties').html(properties.visibleItems.length)
+        });
 
         $("#num_bedrooms").bind("change paste keyup", function() {
             var num = this.value;

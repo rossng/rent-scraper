@@ -16,6 +16,8 @@ NEWSPIDER_MODULE = 'rent_scraper.spiders'
 
 FEED_FORMAT = 'json'
 
+LOG_LEVEL = 'WARNING'
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'rent_scraper (+http://www.yourdomain.com)'
 

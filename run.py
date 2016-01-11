@@ -13,6 +13,8 @@ from rent_scraper.spiders.gough_spider import GoughSpider
 from rent_scraper.spiders.jackson_property_spider import JacksonPropertySpider
 from rent_scraper.spiders.kingsley_thomas_spider import KingsleyThomasSpider
 from rent_scraper.spiders.ocean_spider import OceanSpider
+from rent_scraper.spiders.property_concept_spider import PropertyConceptSpider
+from rent_scraper.spiders.purple_frog_spider import PurpleFrogSpider
 from rent_scraper.spiders.terry_olpin_spider import TerryOlpinSpider
 from rent_scraper.spiders.tlg_spider import TheLettingGameSpider
 from rent_scraper.spiders.ubu_lettings_spider import UbuLettingsSpider
@@ -37,4 +39,6 @@ process.crawl(CityPropertyLetsSpider)
 process.crawl(JacksonPropertySpider)
 process.crawl(FlatlineSpider)
 process.crawl(OceanSpider)
+process.crawl(PropertyConceptSpider)
+process.crawl(PurpleFrogSpider)
 process.start()

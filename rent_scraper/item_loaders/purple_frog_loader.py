@@ -7,32 +7,27 @@ from rent_scraper.processors.common_processors import TextSearch, Concatenate, S
 
 
 def format_price(price_text, loader_context):
-    """Take text representing a price on the Flatline website and return an integer."""
-    return int(re.sub(r"\D", "", price_text)) * loader_context.get('number_bedrooms')
+    """Take text representing a price on the Ocean website and return an integer."""
+    return float(re.sub(r"[^\d\.]", "", price_text)) * loader_context.get('number_bedrooms') * (52.0/12.0)
 
 
 def to_number_bedrooms(text):
-    try:
-        return int(text.split(" ")[0])
-    except ValueError:
-        if text.split(" ") == "Studio":
-            return 1
-        else:
-            return 0
+    tokens = text.split(" ")
+    return int(tokens[0]) if tokens else 0
 
 
-class FlatlinePropertyLoader(ItemLoader):
+class PurpleFrogPropertyLoader(ItemLoader):
 
     default_input_processor = Identity()
     default_output_processor = TakeFirst()
 
-    area_in = Compose(Split(' - '), Get(0), Get(1))
+    area_in = Compose(Split(', '), Get(0), Get(1))
 
-    street_name_in = Compose(Split(' - '), Get(0), Get(1))
+    street_name_in = Compose(Split(', '), Get(0), Get(0))
 
-    postcode_in = Identity()
+    postcode_in = Compose(Split(', '), Get(0), Get(-1))
 
-    number_bedrooms_in = MapCompose(to_number_bedrooms)
+    number_bedrooms_in = Compose(TakeFirst(), MapCompose(to_number_bedrooms))
 
     price_per_month_in = Compose(TakeFirst(), MapCompose(format_price))
 
@@ -41,10 +36,14 @@ class FlatlinePropertyLoader(ItemLoader):
     amenities_in = Concatenate(
             Compose(TextSearch('washing machine'), lambda x: ['Washing machine'] if x else []),
             Compose(TextSearch('parking'), lambda x: ['Parking'] if x else []),
+            Compose(TextSearch('dryer'), lambda x: ['Dryer'] if x else []),
+            Compose(TextSearch('furnished'), lambda x: ['Furnished'] if x else []),
             Compose(TextSearch('dishwasher'), lambda x: ['Dishwasher'] if x else [])
     )
     amenities_out = Identity()
 
     heating_type_in = Compose(TextSearch('gas'), lambda is_gas: 'gas' if is_gas else 'unknown')
 
-    let_agreed_in = Compose(lambda xs: 'Yes' if any('Let' in x for x in xs) else 'No')
+    let_agreed_in = Compose(lambda xs: 'Let' if any('Let Agreed' in x for x in xs) else 'No')
+
+    epc_rating_in = Identity()
