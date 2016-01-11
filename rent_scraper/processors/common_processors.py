@@ -24,6 +24,7 @@ class Get(object):
     def __call__(self, values):
         return values[self.index] if len(values) > self.index else None
 
+
 class TextSearch(object):
     def __init__(self, search_phrase):
         self.search_phrase = search_phrase.lower()
@@ -32,6 +33,7 @@ class TextSearch(object):
         """Takes a list of property features and determines whether it contains the phrase that the AbodeTextSearch
         object was initialised with. Case insensitive."""
         return any(self.search_phrase in s.lower() for s in values)
+
 
 class Concatenate(object):
     def __init__(self, *functions, **default_loader_context):

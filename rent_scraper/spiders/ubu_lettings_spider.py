@@ -14,10 +14,6 @@ class UbuLettingsSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        #filename = response.url.split("/")[-2] + '.html'
-        #with open(filename, 'wb') as f:
-        #    f.write(response.body)
-
         next_page_links = response.css("#propListPrevNextCont td.col2 > a::attr('href')").extract()
         if next_page_links is not None and len(next_page_links) > 0:
             next_page_url = response.urljoin(next_page_links[0])

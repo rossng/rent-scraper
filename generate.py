@@ -5,7 +5,7 @@ jinja_env = Environment(loader=PackageLoader('rent_scraper', package_path='templ
 
 properties = []
 
-for agent in ['abode', 'ubu', 'absolute', 'gough', 'tlg', 'kingsley_thomas', 'terry_olpin']:
+for agent in ['abode', 'ubu', 'absolute', 'gough', 'tlg', 'kingsley_thomas', 'terry_olpin', 'chappell_and_matthews', 'city_property_lets']:
     file = open('rent_scraper/properties_' + agent + '.json')
     properties += json.load(file)
     file.close()

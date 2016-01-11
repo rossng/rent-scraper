@@ -13,9 +13,6 @@ class AbodeSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        #filename = response.url.split("/")[-2] + '.html'
-        #with open(filename, 'wb') as f:
-        #    f.write(response.body)
         for href in response.css(".listingWrap p.more > a::attr('href')"):
             url = response.urljoin(href.extract())
             yield scrapy.Request(url, callback=self.parse_property_page)
