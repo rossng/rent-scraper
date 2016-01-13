@@ -7,14 +7,17 @@ from scrapy.utils.project import get_project_settings
 
 from rent_scraper.spiders.abode_spider import AbodeSpider
 from rent_scraper.spiders.accommodation_unlimited_spider import AccommodationUnlimitedSpider
+from rent_scraper.spiders.berkeley_estates_spider import BerkeleyEstatesSpider
 from rent_scraper.spiders.bristol_property_centre_spider import BristolPropertyCentreSpider
 from rent_scraper.spiders.chappell_matthews_spider import ChappellAndMatthewsSpider
+from rent_scraper.spiders.cliftons_spider import CliftonsSpider
 from rent_scraper.spiders.cpl_spider import CityPropertyLetsSpider
 from rent_scraper.spiders.cpsl_spider import CliftonPropertyServicesSpider
 from rent_scraper.spiders.flatline_spider import FlatlineSpider
 from rent_scraper.spiders.gough_spider import GoughSpider
 from rent_scraper.spiders.jackson_property_spider import JacksonPropertySpider
 from rent_scraper.spiders.kingsley_thomas_spider import KingsleyThomasSpider
+from rent_scraper.spiders.let_with_ease_spider import LetWithEaseSpider
 from rent_scraper.spiders.ocean_spider import OceanSpider
 from rent_scraper.spiders.property_concept_spider import PropertyConceptSpider
 from rent_scraper.spiders.purple_frog_spider import PurpleFrogSpider
@@ -49,4 +52,7 @@ process.crawl(SureMoveSpider)
 process.crawl(BristolPropertyCentreSpider)
 process.crawl(CliftonPropertyServicesSpider)
 process.crawl(AccommodationUnlimitedSpider)
+process.crawl(LetWithEaseSpider)
+process.crawl(CliftonsSpider)
+process.crawl(BerkeleyEstatesSpider)
 process.start()

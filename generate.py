@@ -8,7 +8,8 @@ properties = []
 for agent in ['abode', 'ubu', 'absolute', 'gough', 'tlg', 'kingsley_thomas', 'terry_olpin',
               'chappell_and_matthews', 'city_property_lets', 'jackson_property', 'flatline',
               'ocean', 'property_concept', 'purple_frog', 'sure_move', 'bristol_property_centre',
-              'clifton_property_services', 'accommodation_unlimited']:
+              'clifton_property_services', 'accommodation_unlimited', 'let_with_ease', 'cliftons',
+              'berkeley_estates']:
     file = open('rent_scraper/properties_' + agent + '.json')
     properties += json.load(file)
     file.close()
