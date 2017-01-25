@@ -7,7 +7,8 @@ This is a collection of scripts designed to scrape property information from the
 * Python 2.7
 * Scrapy 1.0.4
 
-All the requirments are listed in `requirements.txt`.  Use `pip install -r requirements.txt` to install them all.
+All the requirments are listed in `requirements.txt`.  
+Use `pip install -r requirements.txt` to install them all.
 
 ## Running rent_scraper
 
